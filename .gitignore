@@ -18,3 +18,16 @@ Desktop.ini
 
 # Archivos de registro
 *.log
+
+# DataFlex - archivos de caché
+*.x64.cch
+
+# Archivos generados por DataFlex
+*.dep
+*.prn
+*.dbg
+*.exe
+
+# Configuración personal de DataFlex Studio
+/IdeSrc/cristiane_Studio.dsk
+/AppSrc/WebApp.cfg
