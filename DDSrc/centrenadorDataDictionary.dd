@@ -7,10 +7,11 @@ Class centrenadorDataDictionary is a DataDictionary
     
     Procedure Construct_Object
         Forward Send Construct_Object
+        // Archivo Main (principal)
         Set Main_File to entrenador.File_Number
-
+        // Archivo Servidor (padre)
         Set Add_Server_File to equipo.File_Number
-
+        // Archivos cliente (hijos)
         Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
