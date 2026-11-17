@@ -11,6 +11,7 @@ Use cWebLabel.pkg
 Use cWebList.pkg
 Use cWebColumn.pkg
 
+
 Object oDashboard is a cWebView
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
@@ -37,110 +38,93 @@ Object oDashboard is a cWebView
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 24
         
+        
         // - - - - - - - - - - - - - - -
         // Main Panel's Responsive Rules
         // - - - - - - - - - - - - - - -
         WebSetResponsive piColumnCount rmMobile to 1
         WebSetResponsive piColumnCount rmTabletPortrait to 16
     
-        Object oTiles_grp is a cWebGroup
-            Set piColumnSpan to 8
+        Object oSidebar_gr is a cWebGroup
+            Set piColumnSpan to 5
             Set pbShowBorder to False
             Set pbShowCaption to False
-            Set piColumnCount to 12
+            Set piColumnCount to 1
             
-            Set psCSSClass to "TilesGroup"
+            Set psCSSClass to "Sidebar"
     
-            Object oWelcomeTile is a cWebHtmlBox
-                Set piColumnSpan to 6
-                Set psCSSClass to "Tile Light"
-                Set psHtml to '<div Class="WebCon_Sizer"><div class="Tile_Title">Welcome</div><div Class="Tile_Subtitle">--</div></div>'
-    
-                Procedure OnLoad
-                    Send UpdateHTML ('<div class="WebCon_Sizer">' + ;
-                                     '<div class="Tile_Title">Welcome</div>' +;
-                                     '<div class="Tile_Subtitle">' - htmlEncode(psUserName(ghoWebSessionManager)) - '</div>' +;
-                                     '</div>')
-                End_Procedure
-                
+            Object oBtnInicio is a cWebButton
+                Set piColumnSpan to 1
+                Set psCaption to "Inicio"
+                Set psCSSClass to "SidebarButton"
+                                
             End_Object
             
             // TILE ENTRENADOR
-            Object oTile2 is a cWebHtmlBox
+            Object oBtnEntrenador is a cWebButton
                 Set pbServerOnClick to True
-                Set piColumnSpan to 6
-                Set piColumnIndex to 6
-                Set psCSSClass to "Tile LightAlternate"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div Class="Tile_Title">Entrenador</div><div class="Tile_Subtitle"></div></div>'
+                Set piColumnSpan to 1
+                Set psCaption to "Entrenador"
+                Set psCSSClass to "SidebarButton"
                                 
                 WebRegisterPath ntNavigateForwardCustom oSelectEntrenador
                 
-                Procedure OnClick String sId String sParam
+                Procedure OnClick 
                     Send NavigatePath
-                End_Procedure
-                
+                End_Procedure          
             End_Object
     
             // TILE JUGADOR
-            Object oTile3 is a cWebHtmlBox
-                Set pbServerOnClick to True
-                Set piColumnSpan to 6
-                Set psCSSClass to "Tile Dark"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div Class="Tile_Title">Jugador</div><div class="Tile_Subtitle"></div></div>'
+            Object oBtnJugador is a cWebButton
+                 Set piColumnSpan to 1
+                 Set psCaption to "Jugador"
+                 Set psCSSClass to "SidebarButton"
     
                  WebRegisterPath ntNavigateForwardCustom oSelectJugador
                 
-                Procedure OnClick String sId String sParam
+                Procedure OnClick
                     Send NavigatePath
-                End_Procedure
-                
+                End_Procedure   
             End_Object
             
             // TILE POSICIÓN
-            Object oTile4 is a cWebHtmlBox
-                Set pbServerOnClick to True
+            Object oBtnPosicion is a cWebButton
+                Set piColumnSpan to 1
                 Set piColumnSpan to 6
-                Set piColumnIndex to 6
-                Set psCSSClass to "Tile DarkAlternate"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div Class="Tile_Title">Posición</div><div class="Tile_Subtitle"></div></div>'
+                Set psCaption to "Posición"
+                Set psCSSClass to "SidebarButton"
             
                 WebRegisterPath ntNavigateForwardCustom oSelectPosicion
                 
-                Procedure OnClick String sId String sParam
+                Procedure OnClick
                     Send NavigatePath
-                End_Procedure
-                
+                End_Procedure 
             End_Object
             
             // TILE EQUIPO
-             Object oTile5 is a cWebHtmlBox
-                Set pbServerOnClick to True
-                Set piColumnSpan to 6
-                Set psCSSClass to "Tile  light"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div Class="Tile_Title">Equipo</div><div class="Tile_Subtitle"></div></div>'
-            
+             Object oBtnEquipo is a cWebButton
+                Set piColumnSpan to 1
+                Set psCaption to "Equipo"
+                Set psCSSClass to "SidebarButton"
+                
                WebRegisterPath ntNavigateForwardCustom oSelectEquipo
                 
-                Procedure OnClick String sId String sParam
+                Procedure OnClick 
                     Send NavigatePath
-                End_Procedure
-                
+                End_Procedure              
             End_Object
             
             // TILE LIGA
-             Object oTile6 is a cWebHtmlBox
-                Set pbServerOnClick to True
-                Set piColumnSpan to 6
-                Set piColumnIndex to 6
-                Set psCSSClass to "Tile DarkAlternate"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div Class="Tile_Title">Liga</div><div class="Tile_Subtitle"></div></div>'
+             Object oBtnLiga is a cWebButton
+                Set piColumnSpan to 1
+                Set psCaption to "Liga"
+                Set psCSSClass to "SidebarButton"
             
                WebRegisterPath ntNavigateForwardCustom oSelectLiga
                 
-                Procedure OnClick String sId String sParam
+                Procedure OnClick 
                     Send NavigatePath
-                End_Procedure
-                
+                End_Procedure            
             End_Object
          End_Object
     

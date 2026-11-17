@@ -1,0 +1,43 @@
+
+/* ==========================================
+   FutbolWebApp - Paleta Verde Campo
+   Sprint 3 - Mejora visual
+   ========================================== */
+
+/* Limpiar cache para actualizar la alteración.*/
+
+:root {
+    /* Colores principales */
+    --df-MainDark: #164B35;
+    --df-MainRegular: #26734D;
+    --df-MainMedium: #26734D;
+    --df-MainLight: #72A982;
+    --df-MainLight2: #A9CBB2;
+    --df-MainLight3: #D5E6D9;
+    --df-MainLight4: #EAF2EC;
+
+    /* Botones */
+    --df-BtnBackgroundColor: var(--df-MainRegular);
+    --df-BtnFocusColor: var(--df-MainDark);
+    --df-BtnTextColor: #FFFFFF;
+}
+
+
+/* ==========================================
+   Dashboard - Imagen de fondo
+   Sprint 3 (en desarrollo)
+   ========================================== */
+
+.DashboardMainPanel {
+    background-image: url("/FutbolWebApp/Images/BackgroundDashboard.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: top center !important;
+    background-size: 100% auto !important;
+}
+
+.DashboardMainPanel > .WebCon_Inner {
+    background-image: url("/FutbolWebApp/Images/BackgroundDashboard.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: top center !important;
+    background-size: 100% auto !important;
+}
