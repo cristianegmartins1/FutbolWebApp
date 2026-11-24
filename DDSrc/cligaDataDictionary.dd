@@ -20,6 +20,10 @@ Class cligaDataDictionary is a DataDictionary
         Set Field_Option Field liga.ID DD_AUTOFIND     to True 
         Set Field_Option Field liga.ID DD_NOPUT        to True
         Set Field_Option Field liga.ID DD_FINDREQ      to True
+        
+        // Poner requerido los campos NOT NULL
+        Set Field_Option Field liga.Nombre DD_REQUIRED to True
+        
     End_Procedure
 
 End_Class

@@ -22,6 +22,10 @@ Class cjugadorposicionDataDictionary is a DataDictionary
         Set Field_Option Field jugador.ID DD_AUTOFIND     to True 
         Set Field_Option Field jugador.ID DD_NOPUT        to True
         Set Field_Option Field jugador.ID DD_FINDREQ      to True
+        
+        // Poner requerido los campos NOT NULL
+        Set Field_Option Field jugadorposicion.JugadorID  DD_REQUIRED to True
+        Set Field_Option Field jugadorposicion.PosicionID DD_REQUIRED to True
 
     End_Procedure
 

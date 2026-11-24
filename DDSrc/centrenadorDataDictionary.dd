@@ -22,6 +22,10 @@ Class centrenadorDataDictionary is a DataDictionary
         Set Field_Option Field entrenador.ID DD_NOPUT        to True
         Set Field_Option Field entrenador.ID DD_FINDREQ      to True
 
+        // Poner requerido los campos NOT NULL
+        Set Field_Option Field entrenador.Nombre   DD_REQUIRED to True
+        Set Field_Option Field entrenador.Apellido DD_REQUIRED to True
+        
     End_Procedure
 
 End_Class

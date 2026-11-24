@@ -20,6 +20,10 @@ Class cposicionDataDictionary is a DataDictionary
         Set Field_Option Field posicion.ID DD_AUTOFIND     to True 
         Set Field_Option Field posicion.ID DD_NOPUT        to True
         Set Field_Option Field posicion.ID DD_FINDREQ      to True
+        
+        // Poner requerido los campos NOT NULL
+        Set Field_Option Field posicion.Nombre DD_REQUIRED to True
+        
     End_Procedure
 
 End_Class
