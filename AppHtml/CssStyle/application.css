@@ -22,22 +22,19 @@
     --df-BtnTextColor: #FFFFFF;
 }
 
-
 /* ==========================================
    Dashboard - Imagen de fondo
    Sprint 3 (en desarrollo)
    ========================================== */
 
-.DashboardMainPanel {
-    background-image: url("/FutbolWebApp/Images/BackgroundDashboard.png") !important;
-    background-repeat: no-repeat !important;
-    background-position: top center !important;
-    background-size: 100% auto !important;
-}
+.DashboardBanner {
+    clear: none !important;
+    width: 79.2% !important;
+    min-height: 380px;
+    margin-top: -28px !important;
 
-.DashboardMainPanel > .WebCon_Inner {
-    background-image: url("/FutbolWebApp/Images/BackgroundDashboard.png") !important;
-    background-repeat: no-repeat !important;
-    background-position: top center !important;
-    background-size: 100% auto !important;
+    background-image: url("../Images/BackgroundDashboard.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% auto;
 }
