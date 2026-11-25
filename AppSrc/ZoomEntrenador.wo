@@ -7,6 +7,7 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebButton.pkg
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
@@ -55,7 +56,40 @@ Object oZoomEntrenador is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "Apellido"
         End_Object 
+        
+        // Sprint 4: Mostrar el nombre del equipo asociado al entrenador.
+        Object oequipoNombre is a cWebForm
+            Entry_Item equipo.Nombre
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set peLabelPosition to lpTop
+            Set psLabel to "Equipo"
+        End_Object
+         
+       // Sprint 4: Seleccionar la nacionalidad del entrenador.      
+        Object oentrenadorNacionalidad is a cWebCombo
+            Entry_Item entrenador.Nacionalidad
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+             Set psLabel to "Nacionalidad"
+            Set peLabelPosition to lpTop
+           
+        End_Object
+              
+        
+        Object oDespedirBtn is a cWebButton // Botón DESPEDIR
+            Set psCaption to "Despedir"
+            Set piColumnSpan to 2
+
+            Procedure OnClick
+            Forward Send OnClick //Clear del padre
+              Send Clear of oequipo_DD
+            End_Procedure
+        End_Object
+        
+       
     End_Object 
+
 
     Object oActionGroup is a cWebMenuGroup
 
@@ -89,7 +123,8 @@ Object oZoomEntrenador is a cWebView
             End_Procedure
 
         End_Object 
-
+        
+        
         Object oCancelChangesBtn is a cWebMenuItem
             Set psCSSClass to "WebIcon_Refresh"
             Set psCaption to "Clear Changes"
@@ -115,7 +150,7 @@ Object oZoomEntrenador is a cWebView
         WebSet pbRender of oSaveBtn to False
         WebSet pbRender of oCancelChangesBtn to False
         WebSet pbRender of oDeleteBtn to False
-
+ 
         If (NavigateData.bReadOnly) Begin
             WebSet pbRender of oEditBtn to True
         End
@@ -123,6 +158,7 @@ Object oZoomEntrenador is a cWebView
             WebSet pbRender of oSaveBtn to True
             WebSet pbRender of oCancelChangesBtn to True
             WebSet pbRender of oDeleteBtn to bHasRecord
+
         End
     End_Procedure
 

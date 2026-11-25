@@ -37,8 +37,8 @@ Object oDashboard is a cWebView
     
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 24
-        
-        
+              
+                      
         // - - - - - - - - - - - - - - -
         // Main Panel's Responsive Rules
         // - - - - - - - - - - - - - - -
@@ -50,7 +50,6 @@ Object oDashboard is a cWebView
             Set pbShowBorder to False
             Set pbShowCaption to False
             Set piColumnCount to 1
-            
             Set psCSSClass to "Sidebar"
     
             Object oBtnInicio is a cWebButton
@@ -59,7 +58,7 @@ Object oDashboard is a cWebView
                 Set psCSSClass to "SidebarButton"
                                 
             End_Object
-            
+                     
             // TILE ENTRENADOR
             Object oBtnEntrenador is a cWebButton
                 Set pbServerOnClick to True
@@ -90,7 +89,6 @@ Object oDashboard is a cWebView
             // TILE POSICIÓN
             Object oBtnPosicion is a cWebButton
                 Set piColumnSpan to 1
-                Set piColumnSpan to 6
                 Set psCaption to "Posición"
                 Set psCSSClass to "SidebarButton"
             
@@ -126,12 +124,22 @@ Object oDashboard is a cWebView
                     Send NavigatePath
                 End_Procedure            
             End_Object
-         End_Object
+         End_Object // oSidebar_gr
     
-    End_Object
+                
+            // BANNER
+        Object oBanner_grp is a cWebGroup
+            Set piColumnSpan to 24
+            Set pbShowBorder to False
+            Set pbShowCaption to False
+            Set piColumnCount to 1
+            Set psCSSClass to "DashboardBanner"
+        End_Object // oBanner_grp
+    
+    End_Object // oWebMainPanel
     
     Procedure OnBeforeShow
         // Each time this view is shown we will update the appropriate information.
     End_Procedure
 
-End_Object
+End_Object // oDashboard

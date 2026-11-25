@@ -3,20 +3,44 @@
 Open entrenador
 Open equipo
 
+Object oNacionalidad_Val is a CodeValidationTable //Validación campo "Nacionalidad"
+      Set Type_Value to "NACION"
+End_Object
+
 Class centrenadorDataDictionary is a DataDictionary
     
     Procedure Construct_Object
         Forward Send Construct_Object
-        // Archivo Main (principal)
-        Set Main_File to entrenador.File_Number
-        // Archivo Servidor (padre)
-        Set Add_Server_File to equipo.File_Number
-        // Archivos cliente (hijos)
-        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Main_File to entrenador.File_Number  //Archivo Main (principal)
+       
+        Set Add_Server_File to equipo.File_Number //Archivo Servidor (padre)
+        Set ParentNullAllowed equipo.File_Number to True //Poner NULL a padre
+        
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True  //Archivos cliente (hijos)
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
         Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        
+        //Proteger clave primaria
+        Set Field_Option Field entrenador.ID DD_AUTOFIND     to True 
+        Set Field_Option Field entrenador.ID DD_NOPUT        to True
+        Set Field_Option Field entrenador.ID DD_FINDREQ      to True
 
+        // Poner requerido los campos NOT NULL
+        Set Field_Option Field entrenador.Nombre   DD_REQUIRED to True
+        Set Field_Option Field entrenador.Apellido DD_REQUIRED to True
+        
+        // Validación campo "Nacionalidad"
+        Set Field_Value_Table Field entrenador.Nacionalidad to oNacionalidad_Val 
+        
+        
+    End_Procedure
+    
+    Procedure Attach_Main_File
+        Forward Send Attach_Main_File
+        
+        If (entrenador.EquipoID = 0);
+            Set_Attribute DF_FIELD_IS_NULL of entrenador.File_Number (RefTable(entrenador.EquipoID)) to True
     End_Procedure
 
 End_Class
