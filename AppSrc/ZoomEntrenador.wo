@@ -57,6 +57,26 @@ Object oZoomEntrenador is a cWebView
             Set psLabel to "Apellido"
         End_Object 
         
+        // Sprint 4: Mostrar el nombre del equipo asociado al entrenador.
+        Object oequipoNombre is a cWebForm
+            Entry_Item equipo.Nombre
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set peLabelPosition to lpTop
+            Set psLabel to "Equipo"
+        End_Object
+         
+       // Sprint 4: Seleccionar la nacionalidad del entrenador.      
+        Object oentrenadorNacionalidad is a cWebCombo
+            Entry_Item entrenador.Nacionalidad
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+             Set psLabel to "Nacionalidad"
+            Set peLabelPosition to lpTop
+           
+        End_Object
+              
+        
         Object oDespedirBtn is a cWebButton // Botón DESPEDIR
             Set psCaption to "Despedir"
             Set piColumnSpan to 2
@@ -67,8 +87,8 @@ Object oZoomEntrenador is a cWebView
             End_Procedure
         End_Object
         
+       
     End_Object 
-
 
 
     Object oActionGroup is a cWebMenuGroup
