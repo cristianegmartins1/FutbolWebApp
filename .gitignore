@@ -31,3 +31,6 @@ Desktop.ini
 # Configuración personal de DataFlex Studio
 /IdeSrc/cristiane_Studio.dsk
 /AppSrc/WebApp.cfg
+
+# Metadatos generados por DataFlex Studio
+/IdeSrc/StudioMetaData64.mtd
