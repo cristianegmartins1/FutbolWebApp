@@ -21,7 +21,51 @@ Class cequipoDataDictionary is a DataDictionary
         Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
         Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
         Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        
+        //Proteger clave primaria
+        Set Field_Option Field equipo.ID DD_AUTOFIND     to True 
+        Set Field_Option Field equipo.ID DD_NOPUT        to True
+        Set Field_Option Field equipo.ID DD_FINDREQ      to True
+
+        //Poner requerido los campos NOT NULL
+        Set Field_Option Field equipo.Nombre DD_REQUIRED to True
+        Set Field_Option Field equipo.LigaID DD_REQUIRED to True
 
     End_Procedure
 
+        //Procedure Backout
+    Procedure Backout
+        Forward Send Backout
+        
+        Integer iNumEquipos
+        
+        Move liga.Equipos  to iNumEquipos
+        
+        If (iNumEquipos > 0) Begin
+            Decrement iNumEquipos
+            Move iNumEquipos to liga.Equipos
+        End
+        Else Begin
+            Send UserError "No hay equipos para quitar" "ERROR"
+        End
+    End_Procedure
+    
+        
+        // Procedure Update
+                Procedure Update
+            Forward Send Update
+            
+            Integer iNumEquipos iMaxEquipos
+            
+            Move liga.Equipos     to iNumEquipos
+            Move liga.EquiposMax  to iMaxEquipos
+            
+            If (iNumEquipos < iMaxEquipos) Begin
+                Increment iNumEquipos
+                Move iNumEquipos to liga.Equipos
+            End
+            Else Begin
+                Send UserError "No hay sitio en la liga para el nuevo equipo" "ERROR"
+            End
+        End_Procedure
 End_Class
