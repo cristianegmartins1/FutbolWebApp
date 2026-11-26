@@ -1,13 +1,12 @@
 ﻿// C:\DataFlex Projects\FutbolWebApp\AppSrc\ZoomJugador.wo
 // ZoomJugador
-//
 
 Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
-Use SelectPosicion.wo
+Use SelectJugadorPosicion.wo
 Use cWebButton.pkg
 
 Use cligaDataDictionary.dd
@@ -59,12 +58,13 @@ Object oWebMainPanel is a cWebPanel
         Set psLabel to "Apellido"
     End_Object
 
-    Object oSelectPosicionBtn is a cWebButton
-        Set psCaption to "Seleccionar Posición"
+    // Sprint 5: Botón para abrir la gestión de posiciones del jugador.
+    Object oEditarPosicionesBtn is a cWebButton
+        Set psCaption to "Editar Posiciones"
         Set piColumnSpan to 10
         Set piColumnIndex to 0
 
-        WebRegisterPath ntNavigateForward oSelectPosicion
+        WebRegisterPath ntNavigateForward oSelectJugadorPosicion
 
         Procedure OnClick
             Send NavigatePath
