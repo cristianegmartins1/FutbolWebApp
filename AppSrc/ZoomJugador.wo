@@ -1,17 +1,24 @@
-﻿// C:\DataFlex Projects\FutbolWebApp\AppSrc\ZoomJugador.wo
-// ZoomJugador
+﻿
+ // C:\DataFlex Projects\FutbolWebApp\AppSrc\ZoomJugador.wo
+ // ZoomJugador
 
 Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
-Use SelectJugadorPosicion.wo
 Use cWebButton.pkg
+Use cWebList.pkg
+Use cWebColumn.pkg
+Use cWebCombo.pkg
+
+Use SelectJugadorPosicion.wo
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
 Use cjugadorDataDictionary.dd
+Use cposicionDataDictionary.dd
+Use cjugadorposicionDataDictionary.dd
 
 Object oZoomJugador is a cWebView
     Set piColumnCount to 12
@@ -22,58 +29,140 @@ Object oZoomJugador is a cWebView
     Set Verify_Save_Msg to 0
     Set piMaxWidth to 1024
 
+    // Data Dictionaries principales.
     Object oliga_DD is a cligaDataDictionary
-    End_Object 
+    End_Object
 
     Object oequipo_DD is a cequipoDataDictionary
-        Set DDO_Server To oliga_DD
-    End_Object 
+        Set DDO_Server to oliga_DD
+    End_Object
 
     Object ojugador_DD is a cjugadorDataDictionary
-        Set DDO_Server To oequipo_DD
-    End_Object 
-
-    Set Main_DD To ojugador_DD
-    Set Server  To ojugador_DD
-
-
-   
-Object oWebMainPanel is a cWebPanel
-    Set piColumnCount to 12
-    WebSetResponsive piColumnCount rmMobile to 4
-
-    Object ojugadorNombre is a cWebForm
-        Entry_Item jugador.Nombre
-        Set piColumnSpan to 10
-        Set piColumnIndex to 0
-        Set peLabelPosition to lpTop
-        Set psLabel to "Nombre"
+        Set DDO_Server to oequipo_DD
     End_Object
 
-    Object ojugadorApellido is a cWebForm
-        Entry_Item jugador.Apellido
-        Set piColumnSpan to 10
-        Set piColumnIndex to 0
-        Set peLabelPosition to lpTop
-        Set psLabel to "Apellido"
+    // Sprint 5: DDO para consultar las posiciones asociadas al jugador.
+    Object oposicion_DD is a cposicionDataDictionary
     End_Object
 
-    // Sprint 5: Botón para abrir la gestión de posiciones del jugador.
-    Object oEditarPosicionesBtn is a cWebButton
-        Set psCaption to "Editar Posiciones"
-        Set piColumnSpan to 10
-        Set piColumnIndex to 0
-
-        WebRegisterPath ntNavigateForward oSelectJugadorPosicion
-
-        Procedure OnClick
-            Send NavigatePath
-        End_Procedure
+    Object ojugadorposicion_DD is a cjugadorposicionDataDictionary
+        Set DDO_Server to ojugador_DD
+        Set DDO_Server to oposicion_DD
     End_Object
 
-End_Object
+    Set Main_DD to ojugador_DD
+    Set Server to ojugador_DD
 
- 
+    // Panel principal de ZoomJugador.
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 12
+        WebSetResponsive piColumnCount rmMobile to 4
+
+        Object ojugadorNombre is a cWebForm
+            Entry_Item jugador.Nombre
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set peLabelPosition to lpTop
+            Set psLabel to "Nombre"
+        End_Object
+
+        Object ojugadorApellido is a cWebForm
+            Entry_Item jugador.Apellido
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set peLabelPosition to lpTop
+            Set psLabel to "Apellido"
+        End_Object
+
+        // Sprint 5: Botón para mostrar las posiciones en ZoomJugador.
+        Object oEditarPosicionesBtn is a cWebButton
+            Set psCaption to "Editar Posición"
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+
+            Procedure OnClick
+                WebSet pbRender of oComboPosiciones to True
+            End_Procedure
+        End_Object
+
+        // Sprint 5: Desplegable con todas las posiciones disponibles.
+        Object oComboPosiciones is a cWebCombo
+            Set psLabel to "Seleccionar posición"
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set pbServerOnChange to True
+
+            // El desplegable permanece oculto hasta pulsar el botón.
+            Set pbRender to False
+
+            // Cargar las posiciones registradas en la tabla posicion.
+            Procedure OnFill
+                Forward Send OnFill
+
+                Send AddComboItem "" "Seleccionar posición"
+
+                Send Clear of oposicion_DD
+                Send Find of oposicion_DD FIRST_RECORD 1
+
+                While (Found)
+                    Send AddComboItem (String(posicion.ID)) posicion.Nombre
+                    Send Find of oposicion_DD GT 1
+                Loop
+            End_Procedure
+
+            // Sprint 5: Detectar la posición seleccionada y mostrar los nombres.
+            Procedure OnChange String sNewValue String sOldValue
+                Integer iJugadorID
+                Integer iPosicionID
+                String sJugadorNombre
+                String sPosicionNombre
+
+                Forward Send OnChange sNewValue sOldValue
+
+                If (sNewValue <> "") Begin
+
+                    // Obtener el ID y el nombre del jugador actual.
+                    Get Field_Current_Value of ojugador_DD Field jugador.ID to iJugadorID
+                    Get Field_Current_Value of ojugador_DD Field jugador.Nombre to sJugadorNombre
+
+                    // Obtener el ID de la posición seleccionada.
+                    Move (Integer(sNewValue)) to iPosicionID
+
+                    // Buscar la posición seleccionada por su ID.
+                    Clear posicion
+                    Move iPosicionID to posicion.ID
+                    Find EQ posicion by 1
+
+                    If (Found) Begin
+                        Move posicion.Nombre to sPosicionNombre
+
+                        // Mostrar los nombres para comprobar la selección.
+                        Send ShowInfoBox ("Jugador: " + sJugadorNombre + ;
+                            " - Posición: " + sPosicionNombre)
+                    End
+                End
+            End_Procedure
+        End_Object
+
+        // Sprint 5: Lista de posiciones asociadas al jugador actual.
+        Object oListaPosiciones is a cWebList
+            Set Server to ojugadorposicion_DD
+            Set piColumnSpan to 10
+            Set piColumnIndex to 0
+            Set piHeight to 180
+            Set pbShowHeader to False
+            Set pbRender to False
+
+            Object oPosicionNombre is a cWebColumn
+                Entry_Item posicion.Nombre
+                Set psCaption to "Posición"
+                Set piWidth to 300
+            End_Object
+        End_Object
+
+    End_Object
+
+    // Grupo de acciones del Zoom.
     Object oActionGroup is a cWebMenuGroup
 
         Object oSaveBtn is a cWebMenuItem
@@ -83,18 +172,17 @@ End_Object
             Procedure OnClick
                 Send Request_Save
             End_Procedure
-
-        End_Object 
+        End_Object
 
         Object oEditBtn is a cWebMenuItem
             Set psCSSClass to "WebEditMenuItem"
             Set psCaption to "Edit"
+
             Procedure OnClick
                 Send ChangeEditMode True
                 Send SetActionButtons
             End_Procedure
-
-        End_Object 
+        End_Object
 
         Object oDeleteBtn is a cWebMenuItem
             Set psCSSClass to "WebDeleteMenuItem"
@@ -104,10 +192,8 @@ End_Object
             Procedure OnClick
                 Send Request_Delete
             End_Procedure
+        End_Object
 
-        End_Object 
-
-        
         Object oCancelChangesBtn is a cWebMenuItem
             Set psCSSClass to "WebIcon_Refresh"
             Set psCaption to "Clear Changes"
@@ -118,9 +204,7 @@ End_Object
             End_Procedure
         End_Object
 
-        
     End_Object
-
 
     Procedure SetActionButtons
         tWebNavigateData NavigateData
@@ -131,12 +215,11 @@ End_Object
         Get GetNavigateData to NavigateData
         Get HasRecord of hoDD to bHasRecord
 
-        // let's hide all buttons and then Show the ones we want
+        // Ocultar inicialmente todos los botones.
         WebSet pbRender of oEditBtn to False
         WebSet pbRender of oSaveBtn to False
         WebSet pbRender of oCancelChangesBtn to False
         WebSet pbRender of oDeleteBtn to False
- 
 
         If (NavigateData.bReadOnly) Begin
             WebSet pbRender of oEditBtn to True
@@ -149,11 +232,11 @@ End_Object
     End_Procedure
 
     Procedure OnViewSaved Handle hoServer Boolean bChanged
-        // Close after save
+        // Cerrar la vista después de guardar.
         Send NavigateClose Self
     End_Procedure
 
-    // this will close the view after a delete
+    // Cerrar la vista después de eliminar.
     Procedure OnViewDeleted Handle hoDDO
         Send NavigateClose Self
     End_Procedure
@@ -161,23 +244,22 @@ End_Object
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
         Case Begin
             Case (NavigateData.eNavigateType = nfFromMain)
-                // If from main, this is a propbably a main file Select to Zoom.
+                // Navegación desde una vista principal.
                 Case Break
 
             Case (NavigateData.eNavigateType = nfFromParent)
-                // If from parent, this is a constrained drill down.
+                // Navegación desde una vista padre.
                 Case Break
 
             Case (NavigateData.eNavigateType = nfFromChild)
-                // If from child, this is a probably a parent Zoom from a Zoom.
+                // Navegación desde una vista hija.
                 Case Break
 
-            Case Else // must be nfUndefined
-
+            Case Else
+                // Tipo de navegación no definido.
         Case End
 
         Send SetActionButtons
-
     End_Procedure
 
-End_Object 
+End_Object

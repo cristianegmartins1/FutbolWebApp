@@ -8,6 +8,9 @@ Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebColumnButton.pkg
 Use cWebColumn.pkg
+// Sprint 5: Data Dictionaries para consultar las posiciones del jugador.
+Use cposicionDataDictionary.dd
+Use cjugadorposicionDataDictionary.dd
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
